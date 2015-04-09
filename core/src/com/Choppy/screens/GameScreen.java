@@ -1,27 +1,33 @@
 package com.Choppy.screens;
 
+import com.Choppy.gameworld.GameRenderer;
+import com.Choppy.gameworld.GameWorld;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
 public class GameScreen implements Screen{
 
+    private GameWorld world;
+    private GameRenderer renderer;
+
+
     public GameScreen(){
+        world = new GameWorld(); // initialize world
+        renderer = new GameRenderer(world); // initialize renderer
         Gdx.app.log("GameScreen", "Attached");
     }
 
     @Override
     public void show() {
+
         Gdx.app.log("GameScreen", "show called");
     }
 
     @Override
     public void render(float delta) {
-        // Sets a color to fill the screen with (RGB = 10,15,230), Opacity of 1(100%)
-        Gdx.gl.glClearColor(10/255.0f, 15/255.0f, 230/255.0f, 1f);
-        // Fills the screen with the selected color
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+       world.update(delta); // update GameWorld
+        renderer.render(); // GameRenderer renders
     }
 
     @Override
