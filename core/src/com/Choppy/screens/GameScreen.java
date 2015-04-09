@@ -1,5 +1,6 @@
 package com.Choppy.screens;
 
+import com.Choppy.cbhelpers.InputHandler;
 import com.Choppy.gameworld.GameRenderer;
 import com.Choppy.gameworld.GameWorld;
 import com.badlogic.gdx.Screen;
@@ -13,9 +14,18 @@ public class GameScreen implements Screen{
 
 
     public GameScreen(){
-        world = new GameWorld(); // initialize world
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+        float gameWidth = 136;
+        float gameHeight = screenHeight / (screenWidth/gameWidth);
+
+        int midPointY = (int) (gameHeight/2);
+
+        world = new GameWorld(midPointY); // initialize world
         renderer = new GameRenderer(world); // initialize renderer
-        Gdx.app.log("GameScreen", "Attached");
+
+        Gdx.input.setInputProcessor(new InputHandler(world.getBird()));
+
     }
 
     @Override
