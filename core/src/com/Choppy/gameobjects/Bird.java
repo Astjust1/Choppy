@@ -19,6 +19,13 @@ public class Bird {
         velocity = new Vector2(0,0);
         accelration = new Vector2(0,460);
     }
+    public boolean isFalling(){
+        return velocity.y > 110;
+    }
+
+    public boolean shouldntFlap(){
+        return velocity.y > 70;
+    }
 
     public void update(float delta){
         velocity.add(accelration.cpy().scl(delta));
@@ -28,6 +35,24 @@ public class Bird {
         }
 
         position.add(velocity.cpy().scl(delta));
+
+        //rotate counterclockwise
+        if (velocity.y <0){
+            rotation -= 600 *delta;
+
+            if (rotation < -20){
+                rotation = -20;
+            }
+
+        }
+
+        //rotate clockwise
+        if (isFalling()){
+            rotation += 480 * delta;
+            if (rotation > 90){
+                rotation = 90;
+            }
+        }
     }
 
     public void onClick(){
